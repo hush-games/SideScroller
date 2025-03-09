@@ -1,5 +1,5 @@
 const getCanvasCoords = (gameWidth,gameHeight,objectHeight,x,y) => {
-    return [ (gameWidth/2) + x , gameHeight - (objectHeight/2) - y]
+    return [ (gameWidth/2) + x , gameHeight - y]
 }
 
 export const drawPlayer = (ctx,gameWidth,gameHeight,playerWidth,playerHeight,x,y) => {
@@ -8,11 +8,6 @@ export const drawPlayer = (ctx,gameWidth,gameHeight,playerWidth,playerHeight,x,y
     ctx.rect(canvasX - (playerWidth/2), canvasY - (playerHeight/2), playerWidth, playerHeight);
     ctx.fillStyle = "#FF0000";
     ctx.fill();
-    ctx.closePath();
-    ctx.beginPath();
-    ctx.ellipse(canvasX, canvasY, playerWidth/2, playerHeight/2, 0, 0, 2 * Math.PI);
-    ctx.strokeStyle = "#0000FF";
-    ctx.stroke();
     ctx.closePath();
 }
 
@@ -23,4 +18,10 @@ export const drawPlatform = (ctx,gameWidth,gameHeight,platformWidth,platformHeig
     ctx.fillStyle = "#000000";
     ctx.fill();
     ctx.closePath();
+}
+
+export const drawBackground = (ctx,image,backgroundWidth,backgroundHeight,x,y) => {
+    ctx.drawImage(image,x,y,backgroundWidth,backgroundHeight)
+    ctx.drawImage(image,x + backgroundWidth,y,backgroundWidth,backgroundHeight)
+    ctx.drawImage(image,x - backgroundWidth,y,backgroundWidth,backgroundHeight)
 }

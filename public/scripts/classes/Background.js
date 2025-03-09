@@ -1,3 +1,5 @@
+import { drawBackground } from "../draw.js";
+
 class Background {
     constructor(gameWidth,gameHeight) {
         this.gameWidth = gameWidth;
@@ -5,24 +7,22 @@ class Background {
         this.image = document.getElementById("background");
         this.x = 0;
         this.y = 0;
-        this.width = 640;
+        this.width = 1280;
         this.height = 480;
     }
 
     draw(ctx) {
-        ctx.drawImage(this.image,this.x,this.y,this.width,this.height)
-        ctx.drawImage(this.image,this.x + this.width,this.y,this.width,this.height)
-        ctx.drawImage(this.image,this.x - this.width,this.y,this.width,this.height)
+        drawBackground(ctx,this.image,this.width,this.height,this.x,this.y,)
     }
 
     update(input,player) {
         // Horizontal Movement
         this.dx = 0;
         if (input.keys.includes("ArrowRight") && player.atBoundary) {
-            this.dx -= 5;
+            this.dx -= 2;
         }
         if (input.keys.includes("ArrowLeft") && player.atBoundary) {
-            this.dx += 5
+            this.dx += 2;
         }
         this.x += this.dx;
         if (this.x < 0 - this.width) { this.x = 0 }

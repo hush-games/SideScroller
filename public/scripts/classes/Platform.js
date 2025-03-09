@@ -1,17 +1,21 @@
 import { drawPlatform } from "../draw.js";
 
 class Platform {
-    constructor(gameWidth,gameHeight,initialX,initialY,width,height) {
+    constructor(gameWidth,gameHeight,initialX,initialY,width,height,alwaysRender) {
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
+        this.alwaysRender = alwaysRender
         this.x = initialX;
         this.y = initialY;
         this.width = width;
         this.height = height;
+        this.onScreen = true;
     }
 
     draw(ctx) {
-        drawPlatform(ctx,this.gameWidth,this.gameHeight,this.width,this.height,this.x,this.y)
+        if (this.onScreen) {
+            drawPlatform(ctx,this.gameWidth,this.gameHeight,this.width,this.height,this.x,this.y)
+        }
     }
 
     update(input,player) {
@@ -24,6 +28,13 @@ class Platform {
             this.dx += 5
         }
         this.x += this.dx;
+
+        if (!this.alwaysRender && (this.x > (player.x + this.gameWidth) || this.x < (player.x - this.gameWidth))) {
+            this.onScreen = false;
+        } else {
+            this.onScreen = true;
+        }
+
     }
 }
 
