@@ -10,21 +10,78 @@ window.addEventListener("load", function() {
     canvas.width = 1280;
     canvas.height = 480;
     const GRAVITY = 0.8;
-    const MAX_VELOCITY = -20;
+    const MAX_VELOCITY = -15;
 
     const input = new InputHandler();
     const player = new Player(canvas.width,canvas.height);
     const bg = new Background(canvas.width,canvas.height);
     const levelOnePlatforms = [ 
-        new Platform(canvas.width,canvas.height,200,20,100,20,false),
-        new Platform(canvas.width,canvas.height,-200,100,100,20,false),
-        new Platform(canvas.width,canvas.height,600,100,100,20,false),
-        new Platform(canvas.width,canvas.height,1000,100,100,20,false),
-        new Platform(canvas.width,canvas.height,1400,100,100,20,false),
-        new Platform(canvas.width,canvas.height,-600,100,100,20,false),
-        new Platform(canvas.width,canvas.height,-1000,canvas.height/2,canvas.width/3,canvas.height,false), // Left Wall
-        new Platform(canvas.width,canvas.height,5000,canvas.height/2,canvas.width/3,canvas.height,false), // Right Wall
-        new Platform(canvas.width,canvas.height,2000,0,6000,20,true) //Floor
+        new Platform({
+            gameWidth: canvas.width,
+            gameHeight: canvas.height,
+            initialX: 200,
+            initialY: 100,
+            width: 100,
+            height: 20}),
+        new Platform({
+            gameWidth: canvas.width,
+            gameHeight: canvas.height,
+            initialX: 400,
+            initialY: 200,
+            width: 100,
+            height: 20}),
+        new Platform({
+            gameWidth: canvas.width,
+            gameHeight: canvas.height,
+            initialX: 600,
+            initialY: 300,
+            width: 100,
+            height: 20}),
+        new Platform({
+            gameWidth: canvas.width,
+            gameHeight: canvas.height,
+            initialX: 800,
+            initialY: 400,
+            width: 100,
+            height: 20}),
+        new Platform({
+            gameWidth: canvas.width,
+            gameHeight: canvas.height,
+            initialX: 1000,
+            initialY: 500,
+            width: 100,
+            height: 20}),
+        new Platform({
+            gameWidth: canvas.width,
+            gameHeight: canvas.height,
+            initialX: 1500,
+            initialY: canvas.height/2,
+            width: 400,
+            height: canvas.height}),
+        new Platform({
+            gameWidth: canvas.width,
+            gameHeight: canvas.height,
+            initialX: 2000,
+            initialY: 0,
+            width: 6000,
+            height: 20,
+            type: 'floor'}),
+        new Platform({
+            gameWidth: canvas.width,
+            gameHeight: canvas.height,
+            initialX: -1000,
+            initialY: canvas.height/2,
+            width: canvas.width/3,
+            height: canvas.height,
+            type: 'wall'}),
+        new Platform({
+            gameWidth: canvas.width,
+            gameHeight: canvas.height,
+            initialX: 5000,
+            initialY: canvas.height/2,
+            width: canvas.width/3,
+            height: canvas.height,
+            type: 'wall'})
     ];
 
     const platforms = new PlatformHandler(levelOnePlatforms);

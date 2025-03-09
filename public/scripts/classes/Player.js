@@ -20,7 +20,8 @@ class Player {
         this.landX = 0;
         this.landy = 0;
         // Booleans
-        this.atBoundary = false;
+        this.atHorizontalBoundary = false;
+        this.atVerticalBoundary = false;
         this.onGround = true;
         this.collisionObj = undefined;
     }
@@ -30,34 +31,8 @@ class Player {
     }
 
     update(input,gravity,maxVelocity,platforms) {
-        // Collision
-        
-
-        // Horizontal Movement
-        this.dx = 0;
-        this.atBoundary = false;
-        if (input.keys.includes("ArrowRight")) {
-            this.dx += this.speed;
-        }
-        if (input.keys.includes("ArrowLeft")) {
-            this.dx -= this.speed;
-        }
-        this.x += this.dx;
-        if (this.x > (this.gameWidth/3)) { 
-            this.x = this.gameWidth/3 
-            this.atBoundary = true;
-        }
-        if (this.x < (-this.gameWidth/3)) { 
-            this.x = -this.gameWidth/3 
-            this.atBoundary = true;
-        }
-
-        this.checkHorizontalCollision(platforms);
-
         // Vertical Movement
         this.dy = Math.max(this.dy - gravity, maxVelocity)
-        /* On Ground
-            - Can Jump */
         if (this.onGround) {
             this.dy = -1;
             if (input.keys.includes("Space")) {
@@ -69,7 +44,36 @@ class Player {
         this.y += this.dy;
 
         this.checkVerticalCollision(platforms)
+        
+        this.atVerticalBoundary = false;
+        if (this.y > 4*this.gameHeight/5) { 
+            this.y = 4*this.gameHeight/5;
+            this.atVerticalBoundary = true;
+        } else if (this.y < this.height/2 + 10) { 
+            this.y = this.height/2 + 10;
+            this.atVerticalBoundary = true;
+        }
 
+        // Horizontal Movement
+        this.dx = 0;
+        this.atHorizontalBoundary = false;
+        if (input.keys.includes("ArrowRight")) {
+            this.dx += this.speed;
+        }
+        if (input.keys.includes("ArrowLeft")) {
+            this.dx -= this.speed;
+        }
+        this.x += this.dx;
+
+        if (this.x > (this.gameWidth/3)) { 
+            this.x = this.gameWidth/3 
+            this.atHorizontalBoundary = true;
+        } else if (this.x < (-this.gameWidth/3)) { 
+            this.x = -this.gameWidth/3 
+            this.atHorizontalBoundary = true;
+        }
+
+        this.checkHorizontalCollision(platforms);
     }
 
     checkHorizontalCollision(platforms) {
@@ -81,7 +85,7 @@ class Player {
             }
         })
 
-        if (this.collisionObj) {
+        if (this.collisionObj && this.dx !== 0) {
             this.x = this.collisionObj.x - (this.collisionObj.width/2 + this.width/2 + 0.01) * Math.sign(this.dx)
         }
     }
@@ -95,7 +99,7 @@ class Player {
             }
         })
 
-        if (this.collisionObj) {
+        if (this.collisionObj && this.dy !== 0 && this.collisionObj.type !== 'wall') {
             this.y = this.collisionObj.y - (this.collisionObj.height/2 + this.height/2 + 0.01) * Math.sign(this.dy)
             if (this.dy < 0) {
                 this.dy = -1;

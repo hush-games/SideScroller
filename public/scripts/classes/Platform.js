@@ -1,12 +1,14 @@
 import { drawPlatform } from "../draw.js";
 
 class Platform {
-    constructor(gameWidth,gameHeight,initialX,initialY,width,height,alwaysRender) {
+    constructor({gameWidth,gameHeight,initialX,initialY,width,height,type = 'platform'}) {
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
-        this.alwaysRender = alwaysRender
+        this.type = type;
         this.x = initialX;
         this.y = initialY;
+        this.dx = 0;
+        this.dy = 0;
         this.width = width;
         this.height = height;
         this.onScreen = true;
@@ -21,15 +23,18 @@ class Platform {
     update(input,player) {
         // Horizontal Movement
         this.dx = 0;
-        if (input.keys.includes("ArrowRight") && player.atBoundary) {
-            this.dx -= 5;
-        }
-        if (input.keys.includes("ArrowLeft") && player.atBoundary) {
-            this.dx += 5
+        if ((input.keys.includes("ArrowRight") || input.keys.includes("ArrowLeft")) && player.atHorizontalBoundary) {
+            this.dx -= player.dx;
         }
         this.x += this.dx;
 
-        if (!this.alwaysRender && (this.x > (player.x + this.gameWidth) || this.x < (player.x - this.gameWidth))) {
+        this.dy = 0;
+        if (player.atVerticalBoundary) {
+            this.dy -= player.dy;
+        }
+        this.y += this.dy;
+
+        if (this.type !== 'floor' && (this.x > (player.x + this.gameWidth) || this.x < (player.x - this.gameWidth))) {
             this.onScreen = false;
         } else {
             this.onScreen = true;
