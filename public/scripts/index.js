@@ -4,11 +4,18 @@ import PlatformHandler from "./classes/PlatformHandler.js";
 import InputHandler from "./classes/InputHandler.js";
 import Background from "./classes/Background.js";
 
-window.addEventListener("load", function() {
+
+const scale = window.devicePixelRatio
+
+window.addEventListener("load", () => {
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext("2d");
-    canvas.width = 1280;
-    canvas.height = 480;
+    const w = 1280;
+    const h = 480;
+    canvas.style.width = w;
+    canvas.style.height = h;
+    canvas.width = w * scale;
+    canvas.height = h * scale;
     const GRAVITY = 0.8;
     const MAX_VELOCITY = -15;
 
@@ -55,7 +62,7 @@ window.addEventListener("load", function() {
             gameWidth: canvas.width,
             gameHeight: canvas.height,
             initialX: 1500,
-            initialY: canvas.height/2,
+            initialY: canvas.height/2 + 20,
             width: 400,
             height: canvas.height}),
         new Platform({
@@ -64,7 +71,7 @@ window.addEventListener("load", function() {
             initialX: 2000,
             initialY: 0,
             width: 6000,
-            height: 20,
+            height: 30,
             type: 'floor'}),
         new Platform({
             gameWidth: canvas.width,
@@ -72,16 +79,14 @@ window.addEventListener("load", function() {
             initialX: -1000,
             initialY: canvas.height/2,
             width: canvas.width/3,
-            height: canvas.height,
-            type: 'wall'}),
+            height: canvas.height}),
         new Platform({
             gameWidth: canvas.width,
             gameHeight: canvas.height,
             initialX: 5000,
             initialY: canvas.height/2,
             width: canvas.width/3,
-            height: canvas.height,
-            type: 'wall'})
+            height: canvas.height})
     ];
 
     const platforms = new PlatformHandler(levelOnePlatforms);

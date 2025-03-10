@@ -100,13 +100,17 @@ class Player {
         })
 
         if (this.collisionObj && this.dy !== 0 && this.collisionObj.type !== 'wall') {
-            this.y = this.collisionObj.y - (this.collisionObj.height/2 + this.height/2 + 0.01) * Math.sign(this.dy)
-            if (this.dy < 0) {
-                this.dy = -1;
-                this.onGround = true;
-            } else {
-                this.dy = 0;
-                this.onGround = false;
+            const newY = this.collisionObj.y - (this.collisionObj.height/2 + this.height/2 + 0.01) * Math.sign(this.dy)
+            console.log(Math.abs(this.y - newY))
+            if (Math.abs(this.y - newY) <= 15){
+                this.y = newY;
+                if (this.dy < 0) {
+                    this.dy = -1;
+                    this.onGround = true;
+                } else {
+                    this.dy = 0;
+                    this.onGround = false;
+                }
             }
         } else {
             this.onGround = false;

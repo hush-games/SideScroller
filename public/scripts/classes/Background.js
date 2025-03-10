@@ -7,8 +7,8 @@ class Background {
         this.image = document.getElementById("background");
         this.x = 0;
         this.y = 0;
-        this.width = 1280;
-        this.height = 480;
+        this.width = gameWidth;
+        this.height = gameHeight;
     }
 
     draw(ctx) {
