@@ -19,9 +19,15 @@ window.addEventListener("load", () => {
     const GRAVITY = 0.8;
     const MAX_VELOCITY = -15;
 
+    const bgImg = document.getElementById("background");
+
     const input = new InputHandler();
-    const player = new Player(canvas.width,canvas.height);
-    const bg = new Background(canvas.width,canvas.height);
+    const player = new Player({gameWidth:canvas.width,gameHeight:canvas.height});
+    const bg = new Background({
+        gameWidth: canvas.width,
+        gameHeight:  canvas.height,
+        imageSrc: bgImg
+    });
     const levelOnePlatforms = [ 
         new Platform({
             gameWidth: canvas.width,
@@ -62,7 +68,7 @@ window.addEventListener("load", () => {
             gameWidth: canvas.width,
             gameHeight: canvas.height,
             initialX: 1500,
-            initialY: canvas.height/2 + 20,
+            initialY: canvas.height/2 + 15,
             width: 400,
             height: canvas.height}),
         new Platform({
@@ -99,9 +105,9 @@ window.addEventListener("load", () => {
         context.clearRect(0,0,canvas.width,canvas.height);
         bg.draw(context);
         bg.update(input,player);
+        platforms.handle(context,input,player)
         player.draw(context);
         player.update(input,GRAVITY,MAX_VELOCITY,platforms.platformsOnScreen);
-        platforms.handle(context,input,player)
         requestAnimationFrame(animate);
     }
 

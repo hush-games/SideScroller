@@ -2,7 +2,7 @@ import { drawPlayer } from '../draw.js'
 import collision from '../utils/collision.js';
 
 class Player {
-    constructor(gameWidth,gameHeight) {
+    constructor({gameWidth,gameHeight}) {
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
 
@@ -49,8 +49,8 @@ class Player {
         if (this.y > 4*this.gameHeight/5) { 
             this.y = 4*this.gameHeight/5;
             this.atVerticalBoundary = true;
-        } else if (this.y < this.height/2 + 10) { 
-            this.y = this.height/2 + 10;
+        } else if (this.y < this.height/2 + 15) { 
+            this.y = this.height/2 + 15;
             this.atVerticalBoundary = true;
         }
 
@@ -101,8 +101,9 @@ class Player {
 
         if (this.collisionObj && this.dy !== 0 && this.collisionObj.type !== 'wall') {
             const newY = this.collisionObj.y - (this.collisionObj.height/2 + this.height/2 + 0.01) * Math.sign(this.dy)
-            console.log(Math.abs(this.y - newY))
-            if (Math.abs(this.y - newY) <= 15){
+            console.log(Math.abs(this.y - newY) + " -- y:" + this.y);
+            console.log(this.collisionObj.y + "-----------------------")
+            if (Math.abs(this.y - newY) <= 25){
                 this.y = newY;
                 if (this.dy < 0) {
                     this.dy = -1;

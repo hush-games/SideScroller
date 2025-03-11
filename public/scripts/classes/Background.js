@@ -1,10 +1,10 @@
 import { drawBackground } from "../draw.js";
 
 class Background {
-    constructor(gameWidth,gameHeight) {
+    constructor({gameWidth,gameHeight,imageSrc}) {
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
-        this.image = document.getElementById("background");
+        this.image = imageSrc;
         this.x = 0;
         this.y = 0;
         this.width = gameWidth;
