@@ -16,16 +16,23 @@ class PlatformHandler {
         })
     }
 
-    handle(ctx,input,player) {
+    draw(ctx,camera) {
+        this.platformsOnScreen.forEach(platform => {
+            platform.draw(ctx,camera);
+        })
+    }
+
+    update(input,player) {
         this.platformsOnScreen = [];
         this.platforms.forEach(platform => {
-            platform.draw(ctx);
             platform.update(input,player);
             if (platform.onScreen) {
                 this.platformsOnScreen.push(platform)
             }
         });
     }
+
+
 }
 
 export default PlatformHandler;

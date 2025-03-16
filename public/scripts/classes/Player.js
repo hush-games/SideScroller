@@ -2,19 +2,19 @@ import { drawPlayer } from '../draw.js'
 import collision from '../utils/collision.js';
 
 class Player {
-    constructor({gameWidth,gameHeight}) {
+    constructor({gameWidth,gameHeight,initialWidth = 40,initalHeight = 60,initalY}) {
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
 
         // Constants
-        this.width = 40;
-        this.height = 60;
+        this.width = initialWidth;
+        this.height = initalHeight;
         this.speed = 5;
         this.jumpSpeed = 15;
 
         // Variables
         this.x = 0;
-        this.y = this.height;
+        this.y = this.height/2 + initalY;
         this.dx = 0;
         this.dy = 0;
         this.landX = 0;
@@ -26,11 +26,11 @@ class Player {
         this.collisionObj = undefined;
     }
 
-    draw(ctx) {
-        drawPlayer(ctx,this.gameWidth,this.gameHeight,this.width,this.height,this.x,this.y);
+    draw(ctx,camera) {
+        drawPlayer(ctx,this.gameWidth,this.gameHeight,camera,this.width,this.height,this.x,this.y);
     }
 
-    update(input,gravity,maxVelocity,platforms) {
+    update(input,camera,gravity,maxVelocity,platforms) {
         // Vertical Movement
         this.dy = Math.max(this.dy - gravity, maxVelocity)
         if (this.onGround) {
@@ -46,11 +46,11 @@ class Player {
         this.checkVerticalCollision(platforms)
         
         this.atVerticalBoundary = false;
-        if (this.y > 4*this.gameHeight/5) { 
-            this.y = 4*this.gameHeight/5;
+        if (this.y >= camera.y + camera.height) { 
+            this.y = camera.y + camera.height;
             this.atVerticalBoundary = true;
-        } else if (this.y < this.height/2 + 15) { 
-            this.y = this.height/2 + 15;
+        } else if (this.y <= camera.y + 300 && this.y > Math.min(300,this.y)) { 
+            this.y = camera.y + Math.min(300,this.y);
             this.atVerticalBoundary = true;
         }
 
@@ -65,11 +65,11 @@ class Player {
         }
         this.x += this.dx;
 
-        if (this.x > (this.gameWidth/3)) { 
-            this.x = this.gameWidth/3 
+        if (this.x >= camera.x + camera.width/2) { 
+            //this.x = camera.x + camera.width/2;
             this.atHorizontalBoundary = true;
-        } else if (this.x < (-this.gameWidth/3)) { 
-            this.x = -this.gameWidth/3 
+        } else if (this.x <= camera.x - camera.width/2) { 
+            this.x = camera.x - camera.width/2;
             this.atHorizontalBoundary = true;
         }
 
@@ -101,8 +101,6 @@ class Player {
 
         if (this.collisionObj && this.dy !== 0 && this.collisionObj.type !== 'wall') {
             const newY = this.collisionObj.y - (this.collisionObj.height/2 + this.height/2 + 0.01) * Math.sign(this.dy)
-            console.log(Math.abs(this.y - newY) + " -- y:" + this.y);
-            console.log(this.collisionObj.y + "-----------------------")
             if (Math.abs(this.y - newY) <= 25){
                 this.y = newY;
                 if (this.dy < 0) {
