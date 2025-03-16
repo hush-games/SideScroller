@@ -10,7 +10,7 @@ class Player {
         this.width = initialWidth;
         this.height = initalHeight;
         this.speed = 5;
-        this.jumpSpeed = 15;
+        this.jumpSpeed = 20;
 
         // Variables
         this.x = 0;
@@ -47,10 +47,10 @@ class Player {
         
         this.atVerticalBoundary = false;
         if (this.y >= camera.y + camera.height) { 
-            this.y = camera.y + camera.height;
+            //this.y = camera.y + camera.height;
             this.atVerticalBoundary = true;
-        } else if (this.y <= camera.y + 300 && this.y > Math.min(300,this.y)) { 
-            this.y = camera.y + Math.min(300,this.y);
+        } else if (this.y <= camera.y + 200) { 
+            //this.y = camera.y + Math.min(300,this.y);
             this.atVerticalBoundary = true;
         }
 
@@ -66,7 +66,7 @@ class Player {
         this.x += this.dx;
 
         if (this.x >= camera.x + camera.width/2) { 
-            //this.x = camera.x + camera.width/2;
+            this.x = camera.x + camera.width/2;
             this.atHorizontalBoundary = true;
         } else if (this.x <= camera.x - camera.width/2) { 
             this.x = camera.x - camera.width/2;

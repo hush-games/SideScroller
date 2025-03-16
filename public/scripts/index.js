@@ -17,7 +17,7 @@ window.addEventListener("load", () => {
     canvas.style.height = h;
     canvas.width = w * scale;
     canvas.height = h * scale;
-    const GRAVITY = 0.5;
+    const GRAVITY = 0.8;
     const MAX_VELOCITY = -15;
 
     const PLAYER_HEIGHT = 60;

@@ -6,7 +6,7 @@ class Camera {
         this.y = 0;
         this.dx = 0;
         this.dy = 0;
-        this.speed = 5;
+        this.speed = 15;
         this.width = gameWidth - 600;
         this.height = gameHeight - 100;
     }
@@ -18,15 +18,12 @@ class Camera {
         }
         this.x += this.dx;
 
-        this.dy = 0;
         if (player.atVerticalBoundary) {
-            if (player.dx > 0) {
-                this.dy += this.speed;
-            } else {
-                this.dy += player.dy;
-            }
+            this.dy = Math.round(this.speed * (player.y - (this.y+200))/480);
         }
         this.y += this.dy;
+
+        this.y = Math.max(0,this.y)
     }
 }
 

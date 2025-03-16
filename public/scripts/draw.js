@@ -13,7 +13,7 @@ export const drawPlayer = (ctx,gameWidth,gameHeight,camera,playerWidth,playerHei
 
 export const drawPlatform = (ctx,gameWidth,gameHeight,camera,platformWidth,platformHeight,x,y) => {
     let [ canvasX, canvasY ] = getCanvasCoords(gameWidth,gameHeight,camera,x,y);
-    if (x===200) console.log(canvasY)
+    //if (x===200) console.log(canvasY)
     ctx.beginPath();
     ctx.rect(canvasX - (platformWidth/2), canvasY - (platformHeight/2), platformWidth, platformHeight);
     ctx.fillStyle = "#000000";
