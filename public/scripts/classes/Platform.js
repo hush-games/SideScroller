@@ -14,25 +14,25 @@ class Platform {
         this.onScreen = true;
     }
 
-    draw(ctx) {
+    draw(ctx,camera) {
         if (this.onScreen) {
-            drawPlatform(ctx,this.gameWidth,this.gameHeight,this.width,this.height,this.x,this.y)
+            drawPlatform(ctx,this.gameWidth,this.gameHeight,camera,this.width,this.height,this.x,this.y)
         }
     }
 
     update(input,player) {
         // Horizontal Movement
-        this.dx = 0;
-        if ((input.keys.includes("ArrowRight") || input.keys.includes("ArrowLeft")) && player.atHorizontalBoundary) {
-            this.dx -= player.dx;
-        }
-        this.x += this.dx;
+        // this.dx = 0;
+        // if ((input.keys.includes("ArrowRight") || input.keys.includes("ArrowLeft")) && player.atHorizontalBoundary) {
+        //     this.dx -= player.dx;
+        // }
+        // this.x += this.dx;
 
-        this.dy = 0;
-        if (player.atVerticalBoundary) {
-            this.dy -= player.dy;
-        }
-        this.y += this.dy;
+        // this.dy = 0;
+        // if (player.atVerticalBoundary) {
+        //     this.dy -= player.dy;
+        // }
+        // this.y += this.dy;
 
         if (this.type !== 'floor' && (this.x > (player.x + this.gameWidth) || this.x < (player.x - this.gameWidth))) {
             this.onScreen = false;

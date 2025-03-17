@@ -1,4 +1,5 @@
 import Player from "./classes/Player.js";
+import Camera from "./classes/Camera.js";
 import Platform from "./classes/Platform.js";
 import PlatformHandler from "./classes/PlatformHandler.js";
 import InputHandler from "./classes/InputHandler.js";
@@ -19,10 +20,23 @@ window.addEventListener("load", () => {
     const GRAVITY = 0.8;
     const MAX_VELOCITY = -15;
 
+    const PLAYER_HEIGHT = 60;
+    const PLAYER_WIDTH = 40;
+    const FLOOR_HEIGHT = 30;
+
     const bgImg = document.getElementById("background");
 
     const input = new InputHandler();
-    const player = new Player({gameWidth:canvas.width,gameHeight:canvas.height});
+    const player = new Player({
+        gameWidth:canvas.width,
+        gameHeight:canvas.height,
+        initalY: FLOOR_HEIGHT/2
+    });
+    const camera = new Camera({
+        gameWidth:canvas.width,
+        gameHeight:canvas.height,
+        initalY: FLOOR_HEIGHT/2 + PLAYER_HEIGHT/2
+    });
     const bg = new Background({
         gameWidth: canvas.width,
         gameHeight:  canvas.height,
@@ -104,10 +118,12 @@ window.addEventListener("load", () => {
         lastTime = timestamp;
         context.clearRect(0,0,canvas.width,canvas.height);
         bg.draw(context);
+        platforms.draw(context,camera);
+        player.draw(context,camera);
+        camera.update(input,player);
         bg.update(input,player);
-        platforms.handle(context,input,player)
-        player.draw(context);
-        player.update(input,GRAVITY,MAX_VELOCITY,platforms.platformsOnScreen);
+        platforms.update(context,input,player,camera);
+        player.update(input,camera,GRAVITY,MAX_VELOCITY,platforms.platformsOnScreen);
         requestAnimationFrame(animate);
     }
 

@@ -17,13 +17,13 @@ class Background {
 
     update(input,player) {
         // Horizontal Movement
-        this.dx = 0;
-        if ((input.keys.includes("ArrowRight") || input.keys.includes("ArrowLeft")) && player.atHorizontalBoundary) {
-            this.dx -= (player.dx - 3 * Math.sign(player.dx));
-        }
-        this.x += this.dx;
-        if (this.x < 0 - this.width) { this.x = 0 }
-        if (this.x > 0 + this.width) { this.x = 0 }
+        // this.dx = 0;
+        // if ((input.keys.includes("ArrowRight") || input.keys.includes("ArrowLeft")) && player.atHorizontalBoundary) {
+        //     this.dx -= (player.dx - 3 * Math.sign(player.dx));
+        // }
+        // this.x += this.dx;
+        // if (this.x < 0 - this.width) { this.x = 0 }
+        // if (this.x > 0 + this.width) { this.x = 0 }
     }
 }
 

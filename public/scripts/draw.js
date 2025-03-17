@@ -1,9 +1,9 @@
-const getCanvasCoords = (gameWidth,gameHeight,objectHeight,x,y) => {
-    return [ (gameWidth/2) + x , gameHeight - y]
+const getCanvasCoords = (gameWidth,gameHeight,camera,x,y) => {
+    return [ (gameWidth/2) + x - camera.x, gameHeight - y + camera.y]
 }
 
-export const drawPlayer = (ctx,gameWidth,gameHeight,playerWidth,playerHeight,x,y) => {
-    let [ canvasX, canvasY ] = getCanvasCoords(gameWidth,gameHeight,playerHeight,x,y);
+export const drawPlayer = (ctx,gameWidth,gameHeight,camera,playerWidth,playerHeight,x,y) => {
+    let [ canvasX, canvasY ] = getCanvasCoords(gameWidth,gameHeight,camera,x,y);
     ctx.beginPath();
     ctx.rect(canvasX - (playerWidth/2), canvasY - (playerHeight/2), playerWidth, playerHeight);
     ctx.fillStyle = "#FF0000";
@@ -11,8 +11,9 @@ export const drawPlayer = (ctx,gameWidth,gameHeight,playerWidth,playerHeight,x,y
     ctx.closePath();
 }
 
-export const drawPlatform = (ctx,gameWidth,gameHeight,platformWidth,platformHeight,x,y) => {
-    let [ canvasX, canvasY ] = getCanvasCoords(gameWidth,gameHeight,platformHeight,x,y);
+export const drawPlatform = (ctx,gameWidth,gameHeight,camera,platformWidth,platformHeight,x,y) => {
+    let [ canvasX, canvasY ] = getCanvasCoords(gameWidth,gameHeight,camera,x,y);
+    //if (x===200) console.log(canvasY)
     ctx.beginPath();
     ctx.rect(canvasX - (platformWidth/2), canvasY - (platformHeight/2), platformWidth, platformHeight);
     ctx.fillStyle = "#000000";
