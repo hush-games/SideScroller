@@ -19,7 +19,7 @@ class Camera {
         this.x += this.dx;
 
         if (player.atVerticalBoundary) {
-            this.dy = Math.round(this.speed * (player.y - (this.y+200))/480);
+            this.dy = Math.round(this.speed * (player.y - (this.y+this.gameHeight/2))/480);
         }
         this.y += this.dy;
 

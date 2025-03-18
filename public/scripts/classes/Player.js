@@ -10,7 +10,7 @@ class Player {
         this.width = initialWidth;
         this.height = initalHeight;
         this.speed = 5;
-        this.jumpSpeed = 20;
+        this.jumpSpeed = 12;
 
         // Variables
         this.x = 0;
@@ -31,6 +31,7 @@ class Player {
     }
 
     update(input,camera,gravity,maxVelocity,platforms) {
+        //console.log("Player Y: "+ (this.y - (camera.y + camera.height)));
         // Vertical Movement
         this.dy = Math.max(this.dy - gravity, maxVelocity)
         if (this.onGround) {
@@ -46,13 +47,12 @@ class Player {
         this.checkVerticalCollision(platforms)
         
         this.atVerticalBoundary = false;
-        if (this.y >= camera.y + camera.height) { 
-            //this.y = camera.y + camera.height;
+        if (this.y > camera.y + camera.height) {
             this.atVerticalBoundary = true;
-        } else if (this.y <= camera.y + 200) { 
-            //this.y = camera.y + Math.min(300,this.y);
+        } else if (this.y < camera.y + this.gameHeight/2) {
             this.atVerticalBoundary = true;
         }
+        if (this.atVerticalBoundary) console.log(this.y - camera.y) 
 
         // Horizontal Movement
         this.dx = 0;
